@@ -8,6 +8,7 @@ const { campgroundSchema } = require("./validationSchemas");
 const catchAsync = require("./utils/catchAsync");
 const ExpressError = require("./utils/ExpressError");
 const Campground = require("./models/Campground");
+const Review = require("./models/review");
 const app = express();
 
 app.engine("ejs", ejsMate);
@@ -83,6 +84,19 @@ app.delete(
     const { id } = req.params;
     await Campground.findByIdAndDelete(id);
     res.redirect("/campgrounds");
+  })
+);
+
+app.post(
+  "/campgrounds/:id/reviews",
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const campground = await Campground.findById(id);
+    const newReview = new Review(req.body.review);
+    campground.reviews.push(newReview);
+    await newReview.save();
+    await campground.save();
+    res.redirect(`/campgrounds/${id}`);
   })
 );
 app.all("*", (req, res, next) => {
