@@ -6,9 +6,12 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const methodOverride = require("method-override");
 const ExpressError = require("./utils/ExpressError");
-
-const reviewsRouter = require("./routes/reviews");
-const campgroundRouter = require("./routes/campgrounds");
+const passport = require("passport");
+const localStrategy = require("passport-local");
+const User = require("./models/user");
+const reviewRoutes = require("./routes/reviews");
+const campgroundRoutes = require("./routes/campgrounds");
+const userRoutes = require("./routes/user");
 
 const app = express();
 app.engine("ejs", ejsMate);
@@ -32,14 +35,21 @@ const sessionConfig = {
 app.use(session(sessionConfig));
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new localStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();
 });
-
-app.use("/campgrounds", campgroundRouter);
-app.use("/campgrounds/:id/reviews", reviewsRouter);
+app.use("/", userRoutes);
+app.use("/campgrounds", campgroundRoutes);
+app.use("/campgrounds/:id/reviews", reviewRoutes);
 
 app.all("*", (req, res, next) => {
   next(new ExpressError("Page not found", 404));
