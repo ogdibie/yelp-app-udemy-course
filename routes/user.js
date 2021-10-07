@@ -11,13 +11,16 @@ router.get("/register", (req, res) => {
 
 router.post(
   "/register",
-  catchAsync(async (req, res) => {
+  catchAsync(async (req, res, next) => {
     try {
       const { email, username, password } = req.body;
       const newUser = new User({ email, username });
-      await User.register(newUser, password);
-      req.flash("success", "Welcome to Yelp Camp!");
-      res.redirect("/campgrounds");
+      const registeredUser = await User.register(newUser, password);
+      req.login(registeredUser, (err) => {
+        if (err) return next(err);
+        req.flash("success", "Welcome to Yelp Camp!");
+        res.redirect("/campgrounds");
+      });
     } catch (error) {
       req.flash("error", error.message);
       res.redirect("/register");
@@ -40,4 +43,10 @@ router.post(
     res.redirect("/campgrounds");
   }
 );
+
+router.get("/logout", (req, res) => {
+  req.logOut();
+  req.flash("success", "Goodbye!!");
+  res.redirect("/campgrounds");
+});
 module.exports = router;
