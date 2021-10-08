@@ -1,22 +1,29 @@
 <% layout("./layouts/boilerplate") -%>
-<h1>All Campgrounds</h1>
-<a href="/campgrounds/new">Add Campground</a>
+  <h1>All Campgrounds</h1>
+  <a href="/campgrounds/new">Add Campground</a>
 
-    <% campgrounds.forEach(campground => { %>
-     <div class="card mb-3">
-       <div class="row">
-         <div class="col-md-4">
-           <img class="img-fluid" src="<%= campground.image %> " alt="Campgroun Image">
-         </div>
-         <div class="col-md-8">
-           <div class="card-body">
-             <div class="card-title"><%= campground.title %> </div>
-             <div class="card-text"><%= campground.description %> </div>
-             <div class="card-text"><small class="text-muted"><%= campground.location %> </small> </div>
-             <a class="btn btn-primary" href="/campgrounds/<%= campground._id %>"><%= campground.title %></a>
-           </div>
-         </div>
-       </div>
-     </div>
+  <% campgrounds.forEach(campground=> { %>
+    <div class="card mb-3">
+      <div class="row">
+        <div class="col-md-4">
+          <img class="img-fluid" src="<%= campground.image %> " alt="Campground Image">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <div class="card-title">
+              <%= campground.title %>
+            </div>
+            <div class="card-text">
+              <%= campground.description %>
+            </div>
+            <div class="card-text"><small class="text-muted">
+                <%= campground.location %>
+              </small> </div>
+            <a class="btn btn-primary" href="/campgrounds/<%= campground._id %>">
+              <%= campground.title %>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
     <% }) %>
- 

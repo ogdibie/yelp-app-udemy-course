@@ -17,6 +17,7 @@ const seedDB = async () => {
       places
     )}`;
     const newCampground = new Campground({
+      owner: "615f3a5bd2bcc554e193db11",
       location: `${city}, ${state}`,
       title,
       price,

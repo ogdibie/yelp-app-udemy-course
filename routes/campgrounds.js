@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+const User = require("../models/user");
 const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/ExpressError");
 const Campground = require("../models/Campground");
@@ -20,6 +20,7 @@ const validateCampground = (req, res, next) => {
 router.get(
   "/",
   catchAsync(async (req, res) => {
+    console.log(req.user);
     const campgrounds = await Campground.find({});
     res.render("campgrounds/index", { campgrounds });
   })
@@ -35,6 +36,8 @@ router.post(
   validateCampground,
   catchAsync(async (req, res, next) => {
     const newCampground = new Campground(req.body.campground);
+    console.log(req.user);
+    newCampground.owner = req.user._id;
     await newCampground.save();
     req.flash("success", "Successfully made a new campground.");
     res.redirect("/campgrounds/" + newCampground._id);
@@ -44,9 +47,9 @@ router.post(
 router.get(
   "/:id",
   catchAsync(async (req, res) => {
-    const campground = await Campground.findById(req.params.id).populate(
-      "reviews"
-    );
+    const campground = await Campground.findById(req.params.id)
+      .populate("reviews")
+      .populate("owner");
     if (!campground) {
       req.flash("error", "Campground not found");
       return res.redirect("/campgrounds");
