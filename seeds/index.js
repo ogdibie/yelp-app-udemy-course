@@ -23,7 +23,20 @@ const seedDB = async () => {
       price,
       description:
         "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odit ullam eligendi expedita perspiciatis est tempore quibusdam laboriosam nisi hic, rem, aspernatur magni quae eum debitis enim facilis tempora assumenda! Ea.",
-      image: "https://source.unsplash.com/collection/429524",
+      images: [
+        {
+          url: "https://res.cloudinary.com/university-ruona/image/upload/v1633901752/YelpCamp/fgsrdo1owq3i9ytnzf6v.jpg",
+          filename: "YelpCamp/fgsrdo1owq3i9ytnzf6v",
+        },
+        {
+          url: "https://res.cloudinary.com/university-ruona/image/upload/v1633901752/YelpCamp/lyjrrrznsin3mzfsu4fv.jpg",
+          filename: "YelpCamp/lyjrrrznsin3mzfsu4fv",
+        },
+        {
+          url: "https://res.cloudinary.com/university-ruona/image/upload/v1633901752/YelpCamp/qi449scx6xcnf2kqn3ej.jpg",
+          filename: "YelpCamp/qi449scx6xcnf2kqn3ej",
+        },
+      ],
     });
 
     await newCampground.save();
