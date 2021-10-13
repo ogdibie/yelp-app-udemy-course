@@ -8,21 +8,20 @@ const getRandomElement = (array) =>
   array[Math.floor(Math.random() * array.length)];
 const seedDB = async () => {
   await Campground.deleteMany({});
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 300; i++) {
     const random1000 = Math.floor(Math.random() * 1000);
     const price = Math.floor(Math.random() * 20) + 10;
-    const city = cities[random1000].city;
-    const state = cities[random1000].state;
+    const location = cities[random1000];
     const title = `${getRandomElement(descriptors)} ${getRandomElement(
       places
     )}`;
     const newCampground = new Campground({
       owner: "615fa2112225a2842c081017",
-      location: `${city}, ${state}`,
+      location: `${location.city}, ${location.state}`,
       title,
       geometry: {
         type: "Point",
-        coordinates: [-108.27, 45.94],
+        coordinates: [location.longitude, location.latitude],
       },
       price,
       description:
