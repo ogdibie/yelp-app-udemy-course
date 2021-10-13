@@ -17,24 +17,28 @@ const seedDB = async () => {
       places
     )}`;
     const newCampground = new Campground({
-      owner: "615f3a5bd2bcc554e193db11",
+      owner: "615fa2112225a2842c081017",
       location: `${city}, ${state}`,
       title,
+      geometry: {
+        type: "Point",
+        coordinates: [-108.27, 45.94],
+      },
       price,
       description:
         "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odit ullam eligendi expedita perspiciatis est tempore quibusdam laboriosam nisi hic, rem, aspernatur magni quae eum debitis enim facilis tempora assumenda! Ea.",
       images: [
         {
-          url: "https://res.cloudinary.com/university-ruona/image/upload/v1633901752/YelpCamp/fgsrdo1owq3i9ytnzf6v.jpg",
-          filename: "YelpCamp/fgsrdo1owq3i9ytnzf6v",
+          url: "https://res.cloudinary.com/university-ruona/image/upload/v1634142455/YelpCamp/eas9d29h4juh17oklagg.jpg",
+          filename: "YelpCamp/eas9d29h4juh17oklagg",
         },
         {
-          url: "https://res.cloudinary.com/university-ruona/image/upload/v1633901752/YelpCamp/lyjrrrznsin3mzfsu4fv.jpg",
-          filename: "YelpCamp/lyjrrrznsin3mzfsu4fv",
+          url: "https://res.cloudinary.com/university-ruona/image/upload/v1634142457/YelpCamp/fcbdll4ja3wjrh15xjnr.jpg",
+          filename: "YelpCamp/fcbdll4ja3wjrh15xjnr",
         },
         {
-          url: "https://res.cloudinary.com/university-ruona/image/upload/v1633901752/YelpCamp/qi449scx6xcnf2kqn3ej.jpg",
-          filename: "YelpCamp/qi449scx6xcnf2kqn3ej",
+          url: "https://res.cloudinary.com/university-ruona/image/upload/v1634142457/YelpCamp/skgfhvoeln4ecwpy50fk.jpg",
+          filename: "YelpCamp/skgfhvoeln4ecwpy50fk",
         },
       ],
     });
