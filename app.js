@@ -7,6 +7,7 @@ const path = require("path");
 const ejsMate = require("ejs-mate");
 const session = require("express-session");
 const flash = require("connect-flash");
+const mongoSanitize = require("express-mongo-sanitize");
 const methodOverride = require("method-override");
 const ExpressError = require("./utils/ExpressError");
 const passport = require("passport");
@@ -37,7 +38,7 @@ const sessionConfig = {
 };
 app.use(session(sessionConfig));
 app.use(flash());
-
+app.use(mongoSanitize());
 app.use(passport.initialize());
 app.use(passport.session());
 
