@@ -1,8 +1,7 @@
 <% layout("./layouts/boilerplate") -%>
-  <link rel="stylesheet" href="/stylesheet/stars.css">
+  <link rel="stylesheet" href="/stylesheets/stars.css">
   <div class="row mb-3">
     <div class="col-6">
-      <div id='map' style='width: 400px; height: 300px;'></div>
       <div class="card">
         <div id="campgroundImageCarousel" class="carousel slide" data-bs-ride="false">
           <div class="carousel-inner">
@@ -65,6 +64,7 @@
     </div>
 
     <div class="col-6">
+      <div id='map' style="height: 400px;"></div>
       <% if (user) { %>
         <h2 class="mt-2">Leave a Review</h2>
         <form action="/campgrounds/<%= campground._id %>/reviews" method="post" class="mb-3 needs-validation"
