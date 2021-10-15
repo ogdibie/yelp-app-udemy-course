@@ -13,11 +13,22 @@ const methodOverride = require("method-override");
 const ExpressError = require("./utils/ExpressError");
 const passport = require("passport");
 const localStrategy = require("passport-local");
+const MongoStore = require("connect-mongo");
 const User = require("./models/user");
 const reviewRoutes = require("./routes/reviews");
 const campgroundRoutes = require("./routes/campgrounds");
 const userRoutes = require("./routes/user");
 
+const dbURL = "mongodb://localhost:27017/yelp-campground";
+const store = MongoStore.create({
+  mongoUrl: dbURL,
+  secret: "thisshouldbeabettersecret",
+  touchAfter: 24 * 60 * 60,
+});
+
+store.on("error", (e) => {
+  console.log("Session store error", e);
+});
 const app = express();
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
@@ -37,6 +48,7 @@ const sessionConfig = {
     expires: Date.now() * 1000 * 60 * 60 * 24 * 7,
     maxAge: 1000 * 60 * 60 * 24 * 7,
   },
+  store,
 };
 app.use(session(sessionConfig));
 app.use(flash());
