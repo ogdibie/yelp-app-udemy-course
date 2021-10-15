@@ -19,10 +19,11 @@ const reviewRoutes = require("./routes/reviews");
 const campgroundRoutes = require("./routes/campgrounds");
 const userRoutes = require("./routes/user");
 
-const dbURL = "mongodb://localhost:27017/yelp-campground";
+const dbURL = process.env.DB_URL || "mongodb://localhost:27017/yelp-campground";
+const secret = process.env.SECRET || "thisshouldbeabettersecret";
 const store = MongoStore.create({
   mongoUrl: dbURL,
-  secret: "thisshouldbeabettersecret",
+  secret,
   touchAfter: 24 * 60 * 60,
 });
 
@@ -40,7 +41,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 const sessionConfig = {
   name: "usession",
-  secret: "thisshouldbeabettersecret",
+  secret,
   resave: false,
   saveUninitialized: true,
   cookie: {
